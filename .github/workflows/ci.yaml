@@ -20,6 +20,7 @@ jobs:
           ruff check
           ruff format --check
           docker compose up db -d
+          sleep 3
           python -m scripts.init_db
           python -m scripts.init_random_data
           python -m unittest
