@@ -1,0 +1,5 @@
+venv/
+.venv/
+__pycache__/
+build/
+chat_msg.egg-info/
