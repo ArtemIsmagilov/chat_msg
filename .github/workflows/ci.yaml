@@ -16,7 +16,7 @@ jobs:
           python-version: 3.14
       - name: Run tests
         run: |
-          uv pip install .[dev]
+          pip install .[dev]
           ruff check
           ruff format --check
           docker compose up db ch -d
