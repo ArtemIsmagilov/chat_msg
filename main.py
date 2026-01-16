@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import FastAPI, Query, status, HTTPException
 
-from schema import ChatIn, ChatMessagesResponse, MessageIn
+from schema import ChatIn, ChatMessagesOut, MessageIn
 from crud import insert_chat, select_chat_with_msgs, insert_msg_in_chat, remove_chat
 from logger import logger
 from cache import get_chat_with_msgs, set_chat_with_msgs
@@ -11,19 +11,17 @@ from cache import get_chat_with_msgs, set_chat_with_msgs
 app = FastAPI()
 
 
-@app.get(
-    "/chats/{id}", status_code=status.HTTP_200_OK, response_model=ChatMessagesResponse
-)
+@app.get("/chats/{id}", status_code=status.HTTP_200_OK, response_model=ChatMessagesOut)
 async def get_chat_with_messages(
     id: int,
     limit: Annotated[int, Query(ge=20, le=100)] = 20,
 ):
     logger.info(f"get chat with messages {id=} {limit=}")
     if (result := get_chat_with_msgs(id, limit)) is not None:
-        return ChatMessagesResponse.model_validate_json(result)
+        return ChatMessagesOut.model_validate_json(result)
     if (result := select_chat_with_msgs(id, limit)) is not None:
         set_chat_with_msgs(id, limit, result)
-        return ChatMessagesResponse.model_validate(result)
+        return ChatMessagesOut.model_validate(result)
     raise HTTPException(status.HTTP_400_BAD_REQUEST)
 
 

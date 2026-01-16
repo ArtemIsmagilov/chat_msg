@@ -2,18 +2,18 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 
 
-class MessageResponse(BaseModel):
+class MessageOut(BaseModel):
     id: int
     chat_id: int
     text: str
     created_at: datetime
 
 
-class ChatMessagesResponse(BaseModel):
+class ChatMessagesOut(BaseModel):
     id: int
     title: str
     created_at: datetime
-    messages: list[MessageResponse]
+    messages: list[MessageOut]
 
 
 class ChatIn(BaseModel):
