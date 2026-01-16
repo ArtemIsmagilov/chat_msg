@@ -8,7 +8,8 @@ dependencies = [
   "fastapi[standard]>=0.128.0",
   "orjson>=3.11.5",
   "psycopg[binary,pool]>=3.3.2",
-  "valkey[libvalkey]>=6.1.1",
+  "streaq>=5.2.2",
+  "valkey[libvalkey]>=6.1.1"
 ]
 
 [project.optional-dependencies]
