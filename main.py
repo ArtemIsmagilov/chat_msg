@@ -5,6 +5,7 @@ from fastapi import FastAPI, Query, status, HTTPException
 from schema import ChatIn, ChatMessagesResponse, MessageIn
 from crud import insert_chat, select_chat_with_msgs, insert_msg_in_chat, remove_chat
 from logger import logger
+from cache import get_chat_with_msgs, set_chat_with_msgs
 
 
 app = FastAPI()
@@ -18,9 +19,12 @@ async def get_chat_with_messages(
     limit: Annotated[int, Query(ge=20, le=100)] = 20,
 ):
     logger.info(f"get chat with messages {id=} {limit=}")
-    if (result := select_chat_with_msgs(id, limit)) is None:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST)
-    return ChatMessagesResponse.model_validate(result)
+    if (result := get_chat_with_msgs(id, limit)) is not None:
+        return ChatMessagesResponse.model_validate_json(result)
+    if (result := select_chat_with_msgs(id, limit)) is not None:
+        set_chat_with_msgs(id, limit, result)
+        return ChatMessagesResponse.model_validate(result)
+    raise HTTPException(status.HTTP_400_BAD_REQUEST)
 
 
 @app.post("/chats", status_code=status.HTTP_200_OK)
