@@ -29,7 +29,3 @@ class TestStringMethods(unittest.TestCase):
     def test_delete_chat(self):
         response = self.client.delete("/chats/2")
         self.assertEqual(response.status_code, 204)
-
-
-if __name__ == "__main__":
-    unittest.main()

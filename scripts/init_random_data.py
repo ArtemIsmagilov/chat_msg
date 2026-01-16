@@ -21,7 +21,7 @@ def main():
             ch = Chat(title=f"chat {i}", created_at=random_datetime_between(d1, d2))
             msgs = [
                 Message(
-                    chat_id=i,
+                    chat_id=ch.id,
                     text=f"text {j}",
                     created_at=random_datetime_between(d1, d2),
                 )
