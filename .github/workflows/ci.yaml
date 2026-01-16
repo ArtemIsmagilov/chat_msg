@@ -18,7 +18,7 @@ jobs:
           UV_SYSTEM_PYTHON: 1
       - name: Run tests
         run: |
-          pip install .[dev]
+          uv pip install .[dev]
           ruff check
           ruff format --check
           docker compose up db ch -d
