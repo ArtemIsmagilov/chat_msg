@@ -5,10 +5,28 @@ services:
       POSTGRES_PASSWORD: example
     ports:
       - "5432:5432"
+
   ch:
     image: "valkey/valkey:alpine"
     ports:
       - "6379:6379"
+
+  wr:
+    image: "python:alpine"
+    working_dir: "/app"
+    volumes:
+      - "./:/app"
+    depends_on:
+      - "ch"
+    environment:
+      CH_URL: "valkey://ch:6379"
+      UV_SYSTEM_PYTHON: 1
+    command: >
+      sh -c "apk add gcc musl-dev linux-headers
+      && pip install uv
+      && uv pip install .
+      && streaq jobs.worker
+      "
 
   app:
     image: "python:alpine"
@@ -17,10 +35,16 @@ services:
       - "./:/app"
     depends_on:
       - "db"
+      - "ch"
+      - "wr"
     ports:
       - 8000:8000
+    environment:
+      UV_SYSTEM_PYTHON: 1
     command: >
-      sh -c "pip install .
+      sh -c "apk add gcc musl-dev linux-headers
+      && pip install uv
+      && uv pip install .
       && python -m scripts.init_db
       && uvicorn main:app --host 0.0.0.0 --port 8000
       "

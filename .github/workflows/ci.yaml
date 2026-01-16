@@ -7,6 +7,8 @@ on:
 
 jobs:
   build:
+    env:
+      UV_SYSTEM_PYTHON: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -14,14 +16,12 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           python-version: 3.14
-        env:
-          UV_SYSTEM_PYTHON: 1
       - name: Run tests
         run: |
           uv pip install .[dev]
           ruff check
           ruff format --check
-          docker compose up db ch -d
+          docker compose up db ch wr -d
           sleep 3
           python -m scripts.init_db
           python -m scripts.init_random_data
