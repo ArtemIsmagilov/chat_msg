@@ -7,17 +7,16 @@ on:
 
 jobs:
   build:
-    env:
-      UV_SYSTEM_PYTHON: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Setup uv and python
-        uses: astral-sh/setup-uv@v7
+      - name: Setup python
+        uses: actions/setup-python@v6
         with:
           python-version: 3.14
       - name: Run tests
         run: |
+          pip install uv
           uv pip install .[dev]
           ruff check
           ruff format --check
