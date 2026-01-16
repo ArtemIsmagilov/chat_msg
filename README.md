@@ -12,7 +12,7 @@
 uv pip install .[dev]
 ruff check
 ruff format --check
-docker compose up db -d
+docker compose up db ch wr -d
 python -m scripts.init_db
 python -m scripts.init_random_data
 python -m unittest
