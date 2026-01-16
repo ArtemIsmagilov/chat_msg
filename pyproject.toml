@@ -10,7 +10,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ruff", "basedpyright"]
+dev = ["ruff", "basedpyright", "coverage"]
 
 [tool.basedpyright]
 typeCheckingMode = "standard"

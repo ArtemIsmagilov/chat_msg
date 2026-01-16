@@ -18,8 +18,7 @@ async def get_chat_with_messages(
     limit: Annotated[int, Query(ge=20, le=100)] = 20,
 ):
     logger.info(f"get chat with messages {id=} {limit=}")
-    result = select_chat_with_msgs(id, limit)
-    if result is None:
+    if (result := select_chat_with_msgs(id, limit)) is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)
     return ChatMessagesResponse.model_validate(result)
 

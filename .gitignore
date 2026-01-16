@@ -3,3 +3,5 @@ venv/
 __pycache__/
 build/
 chat_msg.egg-info/
+htmlcov/
+.coverage

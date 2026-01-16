@@ -23,4 +23,5 @@ jobs:
           sleep 3
           python -m scripts.init_db
           python -m scripts.init_random_data
-          python -m unittest
+          coverage run -m unittest
+          coverage report -m
