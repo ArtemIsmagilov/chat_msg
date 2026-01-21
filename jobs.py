@@ -8,6 +8,6 @@ worker = Worker(CH_URL)
 
 
 @worker.task()
-async def sleep(time: int):
+async def sleeper(time: int):
     await asyncio.sleep(time)
     return time

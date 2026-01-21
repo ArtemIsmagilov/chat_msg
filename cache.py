@@ -1,13 +1,10 @@
 import orjson
-
-from utils import get_cache
-
-
-def get_chat_with_msgs(id: int, limit: int):
-    with get_cache() as c:
-        return c.get(f"{id}:{limit}")
+from valkey.asyncio import Valkey
 
 
-def set_chat_with_msgs(id: int, limit: int, result: dict):
-    with get_cache() as c:
-        return c.set(f"{id}:{limit}", orjson.dumps(result))
+async def get_chat_with_msgs(c: Valkey, id: int, limit: int):
+    return await c.get(f"{id}:{limit}")
+
+
+async def set_chat_with_msgs(c: Valkey, id: int, limit: int, result: dict):
+    return await c.set(f"{id}:{limit}", orjson.dumps(result))
