@@ -19,7 +19,7 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install uv
-          uv pip install .[dev]
+          uv pip install -r pyproject.toml  --extra dev
           ruff check
           ruff format --check
           docker compose up db ch wr -d
