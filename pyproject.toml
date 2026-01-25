@@ -6,6 +6,7 @@ dependencies = [
   "SQLAlchemy>=2.0.45",
   "alembic>=1.18.1",
   "fastapi[standard]>=0.128.0",
+  "granian>=2.6.1",
   "orjson>=3.11.5",
   "psycopg[binary,pool]>=3.3.2",
   "streaq>=5.2.2",
@@ -13,7 +14,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ruff", "basedpyright", "coverage"]
+dev = ["ruff>=0.14.14", "basedpyright>=1.37.2", "coverage>=7.13.1"]
 
 [tool.basedpyright]
 typeCheckingMode = "standard"

@@ -15,7 +15,7 @@ class Message(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     chat_id: Mapped[int] = mapped_column(ForeignKey("chat.id", ondelete="CASCADE"))
     text: Mapped[str]
-    created_at: Mapped[datetime]
+    created_at: Mapped[datetime] = mapped_column(default=datetime.now)
 
     chat: Mapped["Chat"] = relationship(back_populates="messages")
 
@@ -28,7 +28,7 @@ class Chat(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
-    created_at: Mapped[datetime]
+    created_at: Mapped[datetime] = mapped_column(default=datetime.now)
 
     messages: Mapped[list["Message"]] = relationship(
         back_populates="chat", cascade="all, delete-orphan"

@@ -46,5 +46,5 @@ services:
       && pip install uv
       && uv pip install .
       && python -m scripts.init_db
-      && uvicorn main:app --host 0.0.0.0 --port 8000
+      && granian --interface asgi main:app --host 0.0.0.0 --port 8000
       "

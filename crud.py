@@ -36,7 +36,7 @@ async def insert_chat(s: AsyncSession, title: str):
 
 
 async def insert_msg_in_chat(s: AsyncSession, id: int, text: str):
-    s.add(Message(chat_id=id, text=text, created_at=datetime.now()))
+    s.add(Message(chat_id=id, text=text))
     try:
         await s.commit()
     except sqlalchemy.exc.IntegrityError:
