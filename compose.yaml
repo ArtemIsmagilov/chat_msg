@@ -24,7 +24,7 @@ services:
     command: >
       sh -c "apk add gcc musl-dev linux-headers
       && pip install uv
-      && uv pip install .
+      && uv pip install -r pyproject.toml
       && streaq jobs.worker
       "
 
@@ -44,7 +44,7 @@ services:
     command: >
       sh -c "apk add gcc musl-dev linux-headers
       && pip install uv
-      && uv pip install .
+      && uv pip install -r pyproject.toml
       && python -m scripts.init_db
       && granian --interface asgi main:app --host 0.0.0.0 --port 8000
       "

@@ -16,23 +16,23 @@ async def main():
     d1 = datetime.strptime("1/1/2023 1:00 AM", "%m/%d/%Y %I:%M %p")
     d2 = datetime.strptime("1/1/2024 1:00 AM", "%m/%d/%Y %I:%M %p")
 
-    s = await anext(get_session())
-    buf = []
-    for i in range(10):
-        ch = Chat(title=f"chat {i}", created_at=random_datetime_between(d1, d2))
-        msgs = [
-            Message(
-                chat_id=ch.id,
-                text=f"text {j}",
-                created_at=random_datetime_between(d1, d2),
-            )
-            for j in range(50)
-        ]
-        ch.messages = msgs
-        buf.append(ch)
-    s.add_all(buf)
-    await s.commit()
-    print("finish random data")
+    async with get_session() as s:
+        buf = []
+        for i in range(10):
+            ch = Chat(title=f"chat {i}", created_at=random_datetime_between(d1, d2))
+            msgs = [
+                Message(
+                    chat_id=ch.id,
+                    text=f"text {j}",
+                    created_at=random_datetime_between(d1, d2),
+                )
+                for j in range(50)
+            ]
+            ch.messages = msgs
+            buf.append(ch)
+        s.add_all(buf)
+        await s.commit()
+        print("finish random data")
 
 
 if __name__ == "__main__":

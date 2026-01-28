@@ -2,5 +2,5 @@ import os
 import dotenv
 
 dotenv.load_dotenv("settings.env")
-DB_URL = os.getenv("DB_URL")
-CH_URL = os.getenv("CH_URL")
+DB_URL = os.environ["DB_URL"]
+CH_URL = os.environ["CH_URL"]
